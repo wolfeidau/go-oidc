@@ -158,6 +158,12 @@ func (p *Provider) Endpoint() oauth2.Endpoint {
 	return oauth2.Endpoint{AuthURL: p.authURL, TokenURL: p.tokenURL}
 }
 
+// VerifySignature parses the JSON web token, verifies the signature, and returns
+// the raw payload.
+func (p *Provider) VerifySignature(ctx context.Context, jwt string) (payload []byte, err error) {
+	return p.remoteKeySet.VerifySignature(ctx, jwt)
+}
+
 // UserInfo represents the OpenID Connect userinfo claims.
 type UserInfo struct {
 	Subject       string `json:"sub"`
